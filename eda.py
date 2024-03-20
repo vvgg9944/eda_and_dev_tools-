@@ -87,17 +87,17 @@ abalones.replace('f', 'M', inplace=True)
 # print(abalones['Sex'].unique())
 
 # ANOVA
-
-from scipy.stats import f_oneway
-
-CategoryGroupLists = abalones.groupby('Sex')['Rings'].apply(list)
-AnovaResults = f_oneway(*CategoryGroupLists)
-print('P-Value for Anova is: ', AnovaResults[1])
-
-if AnovaResults[1] >= 0.05:
-    print('Features are NOT correlated')
-else:
-    print('Features are correlated')
+#
+# from scipy.stats import f_oneway
+#
+# CategoryGroupLists = abalones.groupby('Sex')['Rings'].apply(list)
+# AnovaResults = f_oneway(*CategoryGroupLists)
+# print('P-Value for Anova is: ', AnovaResults[1])
+#
+# if AnovaResults[1] >= 0.05:
+#     print('Features are NOT correlated')
+# else:
+#     print('Features are correlated')
 
 # P-Value for Anova is:  1.8224764694716266e-185
 # Features are correlated
