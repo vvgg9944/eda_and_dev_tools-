@@ -103,7 +103,7 @@ abalones.replace('f', 'M', inplace=True)
 # Features are correlated
 
 from eda import abalones
-print(abalones.columns)
+# print(abalones.columns)
 
 
 
@@ -180,59 +180,59 @@ import pandas as pd
 abalones_1 = pd.concat([abalones]*250, ignore_index=True)
 # print(abalones_1.head())
 
-print(abalones_1.shape)
-
-abalones_1.to_csv('abalones_1.csv')
-
-import polars as pl
-
-abal_pl = pl.read_csv("abalones_1.csv")
-
-
-abal_pd = pd.read_csv('abalones_1.csv')
-
-
-from functools import wraps
-from time import time
-def measure(func):
-    @wraps(func)
-    def _time_it(*args, **kwargs):
-        start = int(round(time() * 100000))
-        try:
-            return func(*args, **kwargs)
-        finally:
-            end_ = int(round(time() * 100000)) - start
-            print(f"Total execution time: {end_ if end_ > 0 else 0} ms")
-    return _time_it
-@measure
-def abal_time_read_pd():
-    abal_pd = pd.read_csv('abalones_1.csv')
-abal_time_read_pd()
-
-@measure
-def abal_time_pl():
-    abal_pl = pl.read_csv('abalones_1.csv')
-abal_time_pl()
-
-# reading - for pandas 136386 ms, for polars - 19202 ms
-
-@measure
-def abal_time_filter_pd():
-    abalones_1.query('Rings > 5')
-abal_time_filter_pd()
-
-@measure
-def abal_time_filter_pl():
-    abalones_1.filter(pl.col('Rings') > 5)
-abal_time_filter_pl()
-
-# 14484 for pandas, 1002 for polars
-
-# @measure
-# def abal_time_agg_pd():
-#     abalones_1.groupby(['Sex']).agg({'Shell weight': ['mean']})
-# abal_time_agg_pd()
+# print(abalones_1.shape)
 #
+# abalones_1.to_csv('abalones_1.csv')
+#
+# import polars as pl
+#
+# abal_pl = pl.read_csv("abalones_1.csv")
+#
+#
+# abal_pd = pd.read_csv('abalones_1.csv')
+
+
+# from functools import wraps
+# from time import time
+# def measure(func):
+#     @wraps(func)
+#     def _time_it(*args, **kwargs):
+#         start = int(round(time() * 100000))
+#         try:
+#             return func(*args, **kwargs)
+#         finally:
+#             end_ = int(round(time() * 100000)) - start
+#             print(f"Total execution time: {end_ if end_ > 0 else 0} ms")
+#     return _time_it
+# @measure
+# def abal_time_read_pd():
+#     abal_pd = pd.read_csv('abalones_1.csv')
+# abal_time_read_pd()
+#
+# @measure
+# def abal_time_pl():
+#     abal_pl = pl.read_csv('abalones_1.csv')
+# abal_time_pl()
+#
+# # reading - for pandas 136386 ms, for polars - 19202 ms
+#
+# @measure
+# def abal_time_filter_pd():
+#     abalones_1.query('Rings > 5')
+# abal_time_filter_pd()
+#
+# @measure
+# def abal_time_filter_pl():
+#     abalones_1.filter(pl.col('Rings') > 5)
+# abal_time_filter_pl()
+#
+# # 14484 for pandas, 1002 for polars
+#
+# # @measure
+# # def abal_time_agg_pd():
+# #     abalones_1.groupby(['Sex']).agg({'Shell weight': ['mean']})
+# # abal_time_agg_pd()
+# #
 # # @measure
 # def abal_time_agg_pl():
 #     abalones_1.groupby('Sex').agg([pl.mean('Shell weight')])
